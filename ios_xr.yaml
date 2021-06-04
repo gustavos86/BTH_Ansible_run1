@@ -1,0 +1,50 @@
+---
+
+- name: Ansible Playbook demo1
+  connection: ansible.netcommon.network_cli
+  gather_facts: false
+  hosts: xr
+  tasks:
+
+  - name: Get config for XR devices
+    cisco.iosxr.iosxr_facts:
+      gather_subset: all
+  
+  - name: Display all info
+    debug:
+      msg: "{{ ansible_facts }}"
+ 
+  - name: Merge the provided configuration with the exisiting running configuration
+    cisco.iosxr.iosxr_static_routes:
+      config:
+      - address_families:
+        - afi: ipv4
+          safi: unicast
+          routes:
+          - dest: 1.1.1.1/32
+            next_hops:
+            - forward_router_address: 10.0.0.1
+          - dest: 1.1.1.2/32
+            next_hops:
+            - forward_router_address: 10.0.0.1
+  
+  - name: Merge provided configuration with device configuration
+    cisco.iosxr.iosxr_l3_interfaces:
+      config:
+      - name: Loopback101
+        ipv4:
+        - address: 10.101.101.101/32
+      - name: Loopback102
+        ipv4:
+        - address: 10.102.102.102/32
+      state: merged
+  
+  - name: run show version on remote devices
+    cisco.iosxr.iosxr_command:
+      commands: 
+      - show version
+      - show ip interface brief
+      - show ip route
+    register: out
+  
+  - debug: var=out.stdout_lines

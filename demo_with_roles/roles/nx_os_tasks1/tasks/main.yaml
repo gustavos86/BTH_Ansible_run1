@@ -1,0 +1,7 @@
+- name: Get config for NX-OS devices
+  cisco.nxos.nxos_facts:
+    gather_subset: all
+
+- debug:
+    msg: "{{ ansible_facts }}"
+

@@ -1,0 +1,16 @@
+vars:
+  StaticRoutes:
+  - route: 11.11.11.11
+    mask: 255.255.255.255
+    next_hop: 10.0.0.1
+  - route: 22.22.22.22
+    mask: 255.255.255.255
+    next_hop: 10.0.0.1
+  - route: 33.33.33.33
+    mask: 255.255.255.255
+    next_hop: 10.0.0.1
+
+- name: render a Jinja2 template onto an IOS device
+  cisco.ios.ios_config:
+    backup: yes
+    src: ios_template.j2

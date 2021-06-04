@@ -1,0 +1,28 @@
+---
+
+- name: Ansible Playbook IOS demo
+  connection: network_cli
+  gather_facts: false
+  hosts: ios
+
+  roles:
+
+  - ios_tasks1
+
+- name: Ansible Playbook NX-OS demo
+  connection: network_cli
+  gather_facts: false
+  hosts: nx-os
+
+  roles:
+
+  - nx_os_tasks1
+
+- name: Ansible Playbook XR demo
+  connection: network_cli
+  gather_facts: false
+  hosts: xr
+
+  roles:
+
+  - xr_os_tasks1
